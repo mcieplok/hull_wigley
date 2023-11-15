@@ -1,0 +1,21 @@
+foamCleanCase 
+surfaceFeatures
+#foamDictionary system/refineMeshDict -entry set -set c1
+#topoSet 
+blockMesh 
+foamDictionary system/refineMeshDict -entry set -set c1
+topoSet 
+refineMesh -dict refineMeshDict -overwrite
+foamDictionary system/refineMeshDict -entry set -set c2
+topoSet 
+refineMesh -dict refineMeshDict -overwrite
+snappyHexMesh -overwrite
+paraFoam 
+renumberMesh -noFields -overwrite
+setFields 
+ls
+decomposePar 
+ls
+foamJob -parallel -screen interFoam
+reconstructPar
+
